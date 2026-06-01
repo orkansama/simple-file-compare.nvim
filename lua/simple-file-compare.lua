@@ -17,8 +17,20 @@ function Compare()
 			if selectedActiveBranch then
 				return vim.notify("Cant compare with active branch!", 4)
 			else
+                -- TODO: Place the two buffers in one window so you can ":q" out
 				local currentFile = vim.fn.bufname("%")
-				vim.fn.termopen("git difftool " .. choice .. " -- " .. currentFile .. "")
+
+				local otherContent = vim.fn.systemlist("git show " .. choice .. ":" .. currentFile)
+
+				vim.cmd("vsp | enew")
+
+				local currentBuf = vim.api.nvim_get_current_buf()
+
+				vim.api.nvim_buf_set_lines(currentBuf, 0, -1, false, otherContent)
+
+				vim.cmd("diffthis")
+				vim.cmd("wincmd p")
+				vim.cmd("diffthis")
 			end
 		end
 	end)

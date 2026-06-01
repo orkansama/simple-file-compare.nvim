@@ -1,23 +1,27 @@
 print("loaded git-branch-selector.nvim")
 
 local M = {}
-
 M.setup = function()
-	SaveAllBranches()
+	vim.api.nvim_create_user_command("Test", function()
+		Compare()
+	end, {})
 end
 
-function SaveAllBranches()
-	local outputTable = vim.fn.systemlist("git branch -r")
-	-- for _, singleValue in ipairs(outputString) do
-	-- print(singleValue)
-	-- end
-
+function Compare()
+	local outputTable = vim.fn.systemlist("git branch")
 	vim.ui.select(outputTable, {
 		prompt = "Select an Element",
 	}, function(choice)
 		if choice then
-			print("Picked:" .. choice)
+			local selectedActiveBranch = vim.startswith(choice, "*")
+			if selectedActiveBranch then
+				return vim.notify("Cant compare with active branch!", 4)
+			else
+				local currentFile = vim.fn.bufname("%")
+				vim.cmd("terminal git difftool " .. choice .. " -- " .. currentFile .. "")
+			end
 		end
 	end)
 end
+
 return M

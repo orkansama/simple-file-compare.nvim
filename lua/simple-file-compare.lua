@@ -18,7 +18,7 @@ function Compare()
 				return vim.notify("Cant compare with active branch!", 4)
 			else
 				local currentFile = vim.fn.bufname("%")
-				vim.cmd("terminal git difftool " .. choice .. " -- " .. currentFile .. "")
+				vim.fn.termopen("git difftool " .. choice .. " -- " .. currentFile .. "")
 			end
 		end
 	end)

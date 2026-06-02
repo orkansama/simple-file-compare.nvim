@@ -56,6 +56,11 @@ The `mode` option controls which picker UI is used to select a branch. The follo
 - `"vimUiSelect"` — uses the built-in `vim.ui.select`
 - `"miniPick"` — uses [mini.pick](https://github.com/echasnovski/mini.pick)
 
+## Usage
+
+- `:FileCompareOpen` — opens a branch picker and displays the diff in a vertical split
+- `:FileCompareClose` — closes the diff and returns to your original buffer
+
 ## Contributing
 - PRs, issues and ideas are welcome
 - This plugin is intended to stay simple and minimal, please keep that in mind when proposing new features

@@ -28,18 +28,22 @@ function Compare()
 				vim.cmd("wincmd p")
 				vim.cmd("diffthis")
 
-				vim.api.nvim_create_user_command("Test2", function()
-					vim.cmd("only")
-					for _, buf in ipairs(vim.api.nvim_list_bufs()) do
-						if buf ~= bufferPathToReturn then
-							vim.api.nvim_buf_delete(buf, { force = true })
-						end
-					end
-					vim.api.nvim_set_current_buf(bufferPathToReturn)
-				end, {})
+				ReturnToBuffer(bufferPathToReturn)
 			end
 		end
 	end)
+end
+
+function ReturnToBuffer(bufferPathToReturn)
+	vim.api.nvim_create_user_command("Test2", function()
+		vim.cmd("only")
+		for _, buf in ipairs(vim.api.nvim_list_bufs()) do
+			if buf ~= bufferPathToReturn then
+				vim.api.nvim_buf_delete(buf, { force = true })
+			end
+		end
+		vim.api.nvim_set_current_buf(bufferPathToReturn)
+	end, {})
 end
 
 return M

@@ -1,16 +1,20 @@
 local M = {}
 
+local modes = {
+	telescope = "telescope",
+	vimUiSelect = "vimUiSelect",
+}
+
 local config = {
-	telescope = true,
-	vimUiSelect = false,
+	mode = modes.telescope,
 }
 
 M.setup = function(user_config)
 	user_config = user_config or {}
-
 	config = vim.tbl_deep_extend("force", config, user_config) -- merge both to be config, but with the right values
-	if config.telescope == true and config.vimUiSelect == true then
-		return vim.notify("simple-file-compare: Cant set telescope and vimUiSelect to true!", 4)
+
+	if not modes[config.mode] then
+		error("Invalid mode")
 	end
 
 	vim.api.nvim_create_user_command("Test", function()
@@ -21,7 +25,7 @@ end
 function Compare()
 	local outputTable = vim.fn.systemlist("git branch")
 
-	if config.telescope == true then
+	if config.mode == modes.telescope then
 		local pickers = require("telescope.pickers")
 		local finders = require("telescope.finders")
 
@@ -34,7 +38,7 @@ function Compare()
 			:find()
 	end
 
-	if config.vimUiSelect == true then
+	if config.mode == modes.vimUiSelect then
 		vim.ui.select(outputTable, {
 			prompt = "Select an Element",
 		}, function(choice)

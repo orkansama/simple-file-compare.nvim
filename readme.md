@@ -20,6 +20,7 @@ https://github.com/user-attachments/assets/08f6b38d-8147-4f5a-8447-d4b487004d43
 {
   'orkansama/simple-file-compare.nvim',
   dependencies = {
+    -- depending on your needs
     'folke/snacks.nvim',
     'nvim-mini/mini.pick',
   },

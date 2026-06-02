@@ -37,6 +37,10 @@ https://github.com/user-attachments/assets/08f6b38d-8147-4f5a-8447-d4b487004d43
 
 Any other common plugin manager should work as well, as long as you call ```require("simple-file-compare").setup()``` after installation.
 
+## Requirements
+
+- Git installed and available in your `PATH`
+- Only tested on Neovim v0.12.2 — older versions may work but are not guaranteed
 
 ## Configuration
 

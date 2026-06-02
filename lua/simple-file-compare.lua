@@ -1,30 +1,44 @@
 local M = {}
 
-local defaultConfig = {
+local config = {
 	telescope = true,
 	vimUiSelect = false,
 }
 
 M.setup = function(user_config)
-	if user_config.vimUiSelect == true then
-		defaultConfig.telescope = false
-		user_config.telescope = false
+	user_config = user_config or {}
+	config = vim.tbl_deep_extend("force", config, user_config) -- merge both to be config, but with the right values
+
+	if config.vimUiSelect == true then
+		config.telescope = false
 	end
 
-	if user_config.telescope == true and user.vimUiSelect == true then
+	if config.telescope == true and config.vimUiSelect == true then
 		return vim.notify("Cant set telescope and vimUiSelect to true!", 4)
 	end
 
-	defaultConfig = vim.tbl_deep_extend("force", defaultConfig, user_config or {})
 	vim.api.nvim_create_user_command("Test", function()
-		Compare(user_config)
+		Compare()
 	end, {})
 end
 
-function Compare(user_config)
+function Compare()
 	local outputTable = vim.fn.systemlist("git branch")
 
-	if user_config.vimUiSelect == true then
+	if config.telescope == true then
+		local pickers = require("telescope.pickers")
+		local finders = require("telescope.finders")
+
+		pickers
+			.new({}, {
+				finder = finders.new_table({
+					results = outputTable,
+				}),
+			})
+			:find()
+	end
+
+	if config.vimUiSelect == true then
 		vim.ui.select(outputTable, {
 			prompt = "Select an Element",
 		}, function(choice)

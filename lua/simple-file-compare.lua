@@ -1,6 +1,5 @@
-print("loaded git-branch-selector.nvim")
-
 local M = {}
+
 M.setup = function()
 	vim.api.nvim_create_user_command("Test", function()
 		Compare()
@@ -17,20 +16,27 @@ function Compare()
 			if selectedActiveBranch then
 				return vim.notify("Cant compare with active branch!", 4)
 			else
-                -- TODO: Place the two buffers in one window so you can ":q" out
 				local currentFile = vim.fn.bufname("%")
-
 				local otherContent = vim.fn.systemlist("git show " .. choice .. ":" .. currentFile)
+				local bufferPathToReturn = vim.api.nvim_get_current_buf()
 
 				vim.cmd("vsp | enew")
-
-				local currentBuf = vim.api.nvim_get_current_buf()
-
-				vim.api.nvim_buf_set_lines(currentBuf, 0, -1, false, otherContent)
+				local newBuf = vim.api.nvim_get_current_buf()
+				vim.api.nvim_buf_set_lines(newBuf, 0, -1, false, otherContent)
 
 				vim.cmd("diffthis")
 				vim.cmd("wincmd p")
 				vim.cmd("diffthis")
+
+				vim.api.nvim_create_user_command("Test2", function()
+					vim.cmd("only")
+					for _, buf in ipairs(vim.api.nvim_list_bufs()) do
+						if buf ~= bufferPathToReturn then
+							vim.api.nvim_buf_delete(buf, { force = true })
+						end
+					end
+					vim.api.nvim_set_current_buf(bufferPathToReturn)
+				end, {})
 			end
 		end
 	end)

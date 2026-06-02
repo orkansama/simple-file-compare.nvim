@@ -51,3 +51,7 @@ The `mode` option controls which picker UI is used to select a branch. The follo
 - `"snacks"` — uses [snacks.nvim](https://github.com/folke/snacks.nvim)
 - `"vimUiSelect"` — uses the built-in `vim.ui.select`
 - `"miniPick"` — uses [mini.pick](https://github.com/echasnovski/mini.pick)
+
+## Contributing
+- PRs, issues and ideas are welcome
+- This plugin is intended to stay simple and minimal, please keep that in mind when proposing new features

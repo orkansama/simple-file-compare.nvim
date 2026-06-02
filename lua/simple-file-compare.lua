@@ -7,14 +7,10 @@ local config = {
 
 M.setup = function(user_config)
 	user_config = user_config or {}
+
 	config = vim.tbl_deep_extend("force", config, user_config) -- merge both to be config, but with the right values
-
-	if config.vimUiSelect == true then
-		config.telescope = false
-	end
-
 	if config.telescope == true and config.vimUiSelect == true then
-		return vim.notify("Cant set telescope and vimUiSelect to true!", 4)
+		return vim.notify("simple-file-compare: Cant set telescope and vimUiSelect to true!", 4)
 	end
 
 	vim.api.nvim_create_user_command("Test", function()

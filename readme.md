@@ -1,3 +1,4 @@
+## simple-file-compare.nvim
 **simple-file-compare.nvim** is a lightweight Neovim plugin that lets you compare the current file against its version on another Git branch. It opens a vertical split with a diff view, making it easy to spot changes without leaving your editor.
 
 - Configurable picker UI: supports Snacks, `vim.ui.select`, and mini.pick
@@ -33,4 +34,20 @@ https://github.com/user-attachments/assets/08f6b38d-8147-4f5a-8447-d4b487004d43
 }
 ```
 
+
 Any other common plugin manager should work as well, as long as you call ```require("simple-file-compare").setup()``` after installation.
+
+
+## Configuration
+
+```lua
+require("simple-file-compare").setup({
+    mode = "snacks", -- default
+})
+```
+
+The `mode` option controls which picker UI is used to select a branch. The following options are available, depending on your needs:
+
+- `"snacks"` — uses [snacks.nvim](https://github.com/folke/snacks.nvim)
+- `"vimUiSelect"` — uses the built-in `vim.ui.select`
+- `"miniPick"` — uses [mini.pick](https://github.com/echasnovski/mini.pick)

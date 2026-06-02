@@ -50,7 +50,7 @@ require("simple-file-compare").setup({
 })
 ```
 
-The `mode` option controls which picker UI is used to select a branch. The following options are available, depending on your needs:
+The `mode` option controls which picker UI is used to select a branch. The following options are available, depending on your preference:
 
 - `"snacks"` — uses [snacks.nvim](https://github.com/folke/snacks.nvim)
 - `"vimUiSelect"` — uses the built-in `vim.ui.select`

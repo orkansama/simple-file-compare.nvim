@@ -18,7 +18,7 @@ M.setup = function(user_config)
 		error("Invalid mode")
 	end
 
-	vim.api.nvim_create_user_command("Test", function()
+	vim.api.nvim_create_user_command("FileCompareOpen", function()
 		Compare()
 	end, {})
 end
@@ -60,7 +60,7 @@ function Compare()
 end
 
 function ReturnToBuffer(bufferPathToReturn)
-	vim.api.nvim_create_user_command("Test2", function()
+	vim.api.nvim_create_user_command("FileCompareClose", function()
 		vim.cmd("only")
 		for _, buf in ipairs(vim.api.nvim_list_bufs()) do
 			if buf ~= bufferPathToReturn then

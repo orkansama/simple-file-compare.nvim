@@ -12,24 +12,7 @@ function Compare()
 		prompt = "Select an Element",
 	}, function(choice)
 		if choice then
-			local selectedActiveBranch = vim.startswith(choice, "*")
-			if selectedActiveBranch then
-				return vim.notify("Cant compare with active branch!", 4)
-			else
-				local currentFile = vim.fn.bufname("%")
-				local otherContent = vim.fn.systemlist("git show " .. choice .. ":" .. currentFile)
-				local bufferPathToReturn = vim.api.nvim_get_current_buf()
-
-				vim.cmd("vsp | enew")
-				local newBuf = vim.api.nvim_get_current_buf()
-				vim.api.nvim_buf_set_lines(newBuf, 0, -1, false, otherContent)
-
-				vim.cmd("diffthis")
-				vim.cmd("wincmd p")
-				vim.cmd("diffthis")
-
-				ReturnToBuffer(bufferPathToReturn)
-			end
+			ChoiceLogic(choice)
 		end
 	end)
 end
@@ -44,6 +27,27 @@ function ReturnToBuffer(bufferPathToReturn)
 		end
 		vim.api.nvim_set_current_buf(bufferPathToReturn)
 	end, {})
+end
+
+function ChoiceLogic(choice)
+	local selectedActiveBranch = vim.startswith(choice, "*")
+	if selectedActiveBranch then
+		return vim.notify("Cant compare with active branch!", 4)
+	else
+		local currentFile = vim.fn.bufname("%")
+		local otherContent = vim.fn.systemlist("git show " .. choice .. ":" .. currentFile)
+		local bufferPathToReturn = vim.api.nvim_get_current_buf()
+
+		vim.cmd("vsp | enew")
+		local newBuf = vim.api.nvim_get_current_buf()
+		vim.api.nvim_buf_set_lines(newBuf, 0, -1, false, otherContent)
+
+		vim.cmd("diffthis")
+		vim.cmd("wincmd p")
+		vim.cmd("diffthis")
+
+		ReturnToBuffer(bufferPathToReturn)
+	end
 end
 
 return M

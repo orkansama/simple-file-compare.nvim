@@ -19,11 +19,15 @@ https://github.com/user-attachments/assets/08f6b38d-8147-4f5a-8447-d4b487004d43
 ```lua
 {
   'orkansama/simple-file-compare.nvim',
+  dependencies = {
+    'folke/snacks.nvim',
+    'nvim-mini/mini.pick',
+  },
   config = function()
-    local simpleFileCompare = require 'simple-file-compare'
-    simpleFileCompare.setup {
+    local simpleFileCompare = require('simple-file-compare')
+    simpleFileCompare.setup({
       mode = 'snacks', -- "snacks" | "vimUiSelect" | "miniPick"
-    }
+    })
   end,
 }
 ```

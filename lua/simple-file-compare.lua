@@ -12,7 +12,7 @@ local config = {
 
 M.setup = function(user_config)
 	user_config = user_config or {}
-	config = vim.tbl_deep_extend("force", config, user_config) -- merge both to be config, but with the right values
+	config = vim.tbl_deep_extend("force", config, user_config) -- merge both to be config, but with the correct values
 
 	if not modes[config.mode] then
 		error("Invalid mode")

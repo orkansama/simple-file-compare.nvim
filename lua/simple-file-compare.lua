@@ -10,6 +10,11 @@ M.setup = function(user_config)
 		defaultConfig.telescope = false
 		user_config.telescope = false
 	end
+
+	if user_config.telescope == true and user.vimUiSelect == true then
+		return vim.notify("Cant set telescope and vimUiSelect to true!", 4)
+	end
+
 	defaultConfig = vim.tbl_deep_extend("force", defaultConfig, user_config or {})
 	vim.api.nvim_create_user_command("Test", function()
 		Compare(user_config)
@@ -18,10 +23,6 @@ end
 
 function Compare(user_config)
 	local outputTable = vim.fn.systemlist("git branch")
-
-	if user_config.telescope == true and user.vimUiSelect == true then
-		return vim.notify("Cant set telescope and vimUiSelect to true!", 4)
-	end
 
 	if user_config.vimUiSelect == true then
 		vim.ui.select(outputTable, {

@@ -66,6 +66,9 @@ ReturnToBuffer = function(bufferPathToReturn)
 	end, {})
 end
 ChoiceLogic = function(choice)
+    if choice == nil then
+		return vim.notify("No branch given, aborting", 1)
+    end
 	local selectedActiveBranch = vim.startswith(choice, "*")
 	if selectedActiveBranch then
 		return vim.notify("Cant compare with active branch!", 4)

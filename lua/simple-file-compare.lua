@@ -1,12 +1,13 @@
 local M = {}
 
 local modes = {
-	telescope = "telescope",
 	vimUiSelect = "vimUiSelect",
+	snacks = "snacks",
+	miniPick = "miniPick",
 }
 
 local config = {
-	mode = modes.telescope,
+	mode = modes.snacks,
 }
 
 M.setup = function(user_config)
@@ -25,27 +26,36 @@ end
 function Compare()
 	local outputTable = vim.fn.systemlist("git branch")
 
-	if config.mode == modes.telescope then
-		local pickers = require("telescope.pickers")
-		local finders = require("telescope.finders")
+	if config.mode == modes.snacks then
+		local snacks = require("snacks")
 
-		pickers
-			.new({}, {
-				finder = finders.new_table({
-					results = outputTable,
-				}),
-			})
-			:find()
+		snacks.picker.select(outputTable, {
+			prompt = "Select Branch",
+		}, function(choice)
+			ChoiceLogic(choice)
+		end)
 	end
 
 	if config.mode == modes.vimUiSelect then
 		vim.ui.select(outputTable, {
-			prompt = "Select an Element",
+			prompt = "Select Branch",
 		}, function(choice)
 			if choice then
 				ChoiceLogic(choice)
 			end
 		end)
+	end
+
+	if config.mode == modes.miniPick then
+		local miniPick = require("mini.pick")
+		miniPick.setup()
+		local choice = miniPick.start({
+			source = {
+				name = "Select Branch",
+				items = outputTable,
+			},
+		})
+		ChoiceLogic(choice)
 	end
 end
 

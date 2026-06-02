@@ -12,3 +12,18 @@
 **Demo**
 
 https://github.com/user-attachments/assets/08f6b38d-8147-4f5a-8447-d4b487004d43
+
+**Installation**
+
+**Lazy**
+```lua
+{
+  'orkansama/simple-file-compare.nvim',
+  config = function()
+    local simpleFileCompare = require('simple-file-compare')
+    simpleFileCompare.setup()
+  end,
+}
+```
+
+Any other common plugin manager should work as well, as long as you call ```require("simple-file-compare").setup()``` after installation.

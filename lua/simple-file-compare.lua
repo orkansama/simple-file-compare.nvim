@@ -76,7 +76,7 @@ function ChoiceLogic(choice)
 	if selectedActiveBranch then
 		return vim.notify("Cant compare with active branch!", 4)
 	else
-		local currentFile = vim.fn.bufname("%")
+		local currentFile = vim.fs.normalize(vim.fn.bufname("%"))
 		local otherContent = vim.fn.systemlist("git show " .. choice .. ":" .. currentFile)
 		local bufferPathToReturn = vim.api.nvim_get_current_buf()
 
